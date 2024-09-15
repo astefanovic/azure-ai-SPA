@@ -1,0 +1,53 @@
+<!doctype html>
+<html data-theme="nord">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="./output.css" rel="stylesheet">
+<script>
+    function sendToOpenAi() {
+    }
+</script>
+</head>
+
+<body>
+    <div class="flex w-full">
+        <div class="grid p-8 flex-grow">
+            <h1 class="text-xl p-4">Patient information</h1>
+            <form>
+                <div class="form-control p-4">
+                  <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Main reason for visit"></textarea>
+                </div>
+                <div class="form-control p-4">
+                  <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Description of symptoms"></textarea>
+                </div>
+                <div class="form-control p-4">
+                  <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Duration of symptoms"></textarea>
+                </div>
+                <div class="form-control p-4">
+                  <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Current treatments"></textarea>
+                </div>
+                <button class="btn btn-primary m-4" onclick="sendToOpenAi()">Submit</button>
+              </form>
+        </div>
+        <div class="divider divider-horizontal"></div>
+        <div class="grid p-8 flex-grow place-items-center">
+            <div class="card-bordered bg-base-300 w-full shadow-xl border-secondary rounded-lg">
+                <div class="card-body">
+                    <h2 class="card-title pb-4 text-neutral">OpenAI Response</h2>
+                    <label class="swap swap-active justify-start">
+                        <div class="swap-on">
+                            <p class="italic justify-start text-neutral">Waiting for input</p>
+                        </div>
+                        <div class="swap-off">
+                            <span class="loading loading-dots loading-lg"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+      </div>
+</body>
+
+</html>
