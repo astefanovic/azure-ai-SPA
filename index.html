@@ -2,20 +2,27 @@
 <html data-theme="nord">
 
 <head>
+    <title>Patient Diagnosis</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
     <script src="bundle.js"></script>
 </head>
 <script>
-
-
     async function handleSubmit() {
         const swapElement = document.querySelector('.swap');
         // Toggle to loading animation
         swapElement.classList.toggle('swap-active');
 
-        let result = await window.sendToOpenAi([document.querySelector('#history').value]);
+        // Get all text areas
+        const textAreas = document.querySelectorAll('textarea');
+        let prompts = [];
+        textAreas.forEach(textArea => {
+            prompts.push(textArea.value);
+        });
+
+        //let result = await window.sendToOpenAi([document.querySelector('#history').value]);
+        let result = await window.sendToOpenAi([prompts]);
         const resultDisplayElement = document.querySelector('.swap-on');
         resultDisplayElement.innerHTML = result;
 
@@ -27,24 +34,24 @@
 <body>
     <div class="flex w-full">
         <div class="grid p-8 w-1/2">
-            <h1 class="text-xl p-4">Patient information</h1>
             <form>
+                <h1 class="text-xl p-4">Patient information</h1>
                 <div class="form-control p-4">
-                    <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Main reason for visit"></textarea>
+                    <textarea type="text" id="main-reason" class="textarea textarea-bordered w-full rounded" placeholder="Main reason for visit"></textarea>
                 </div>
                 <div class="form-control p-4">
-                    <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Description of symptoms"></textarea>
+                    <textarea type="text" id="description" class="textarea textarea-bordered w-full rounded" placeholder="Description of symptoms"></textarea>
                 </div>
                 <div class="form-control p-4">
-                    <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Duration of symptoms"></textarea>
+                    <textarea type="text" id="duration" class="textarea textarea-bordered w-full rounded" placeholder="Duration of symptoms"></textarea>
                 </div>
                 <div class="form-control p-4">
-                    <textarea type="text" class="textarea textarea-bordered w-full rounded" placeholder="Current treatments"></textarea>
+                    <textarea type="text" id="treatments" class="textarea textarea-bordered w-full rounded" placeholder="Current treatments"></textarea>
                 </div>
                 <div class="form-control p-4">
                     <textarea type="text" id="history" class="textarea textarea-bordered w-full rounded" placeholder="Patient history"></textarea>
                 </div>
-                <button type="button" class="btn btn-primary m-4" onclick="handleSubmit()">Submit</button>
+                <button type="button" class="btn btn-accent m-4" onclick="handleSubmit()">Submit</button>
             </form>
         </div>
         <div class="divider divider-horizontal"></div>
@@ -52,7 +59,7 @@
             <div class="card-bordered bg-base-300 w-full shadow-xl border-secondary rounded-lg">
                 <div class="card-body">
                     <h2 class="card-title pb-4 text-neutral">OpenAI Response</h2>
-                    <label class="swap swap-active justify-start">
+                    <label class="swap swap-active justify-start select-auto">
                         <div class="swap-on prose">
                             <p class="italic justify-start text-neutral">Waiting for input...</p>
                         </div>
