@@ -2210,8 +2210,6 @@ const { AzureOpenAI } = require("openai");
 
 //const endpoint = "<endpoint>";
 //const apiKey = "<api key>";
-const endpoint = "https://aleksai.openai.azure.com/";
-const apiKey = "6b866a9c7b7241b98c436bae4ff8a97b";
 const apiVersion = "2023-03-15-preview";
 const deployment = "gpt-4o";
 
