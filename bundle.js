@@ -2233,8 +2233,8 @@ async function sendToOpenAi(prompts) {
 
 function buildMessages(prompts) {
     const messages = [
-        { role: "system", content: "You are a helpful doctors assistant. You are tasked with thinking of diagnoses for patients given a list of symptoms and history of conditions and tests." },
-        { role: "system", content: "The text of your response should use html tags for formatting, as it will be embedded directly into a page." }
+        { role: "system", content: prompts[5] ?? 
+            "You are a helpful doctors assistant. You are tasked with thinking of diagnoses for patients given a list of symptoms and history of conditions and tests. The text of your response should use html tags for formatting, as it will be embedded directly into a page." },
     ];
 
     messages.push({ role: 'user', content: "A patient has visited the doctor, with the following information for the current visit:" });
@@ -2243,11 +2243,9 @@ function buildMessages(prompts) {
     if (prompts[2]) messages.push({ role: 'user', content: "Duration of symptoms: " + prompts[2] });
     if (prompts[3]) messages.push({ role: 'user', content: "Current treatments: " + prompts[3] });
     if (prompts[4]) messages.push({ role: 'user', content: "The following information is a history of conditions and tests: " + prompts[4] });
-    /*
-    for (const prompt of prompts) {
-        messages.push({ role: 'user', content: prompt });
-    }*/
-    messages.push({ role: "user", content: "Given this information, please give the top 5 most likely diagnoses for the presenting problem this visit. When listing out the most likely causes, give the rationale for each. Also, list any recommendations for further investigation and analysis." });
+
+    messages.push({ role: "user", content: prompts[6] ?? 
+        "Given this information, please give the top 5 most likely diagnoses for the presenting problem this visit. When listing out the most likely causes, give the rationale for each. Also, list any recommendations for further investigation and analysis." });
     return messages;
 }
 

@@ -15,10 +15,10 @@
         swapElement.classList.toggle('swap-active');
 
         // Get all text areas
-        const textAreas = document.querySelectorAll('textarea');
+        const textAreas = document.querySelectorAll('.textarea');
         let prompts = [];
         textAreas.forEach(textArea => {
-            prompts.push(textArea.value);
+            prompts.push(textArea.value ?? textArea.textContent);
         });
 
         //let result = await window.sendToOpenAi([document.querySelector('#history').value]);
@@ -34,8 +34,8 @@
 <body>
     <div class="flex w-full">
         <div class="grid p-8 w-1/2">
-            <form>
-                <h1 class="text-xl p-4">Patient information</h1>
+            <div>
+                <h1 class="text-xl font-medium p-4">Patient information</h1>
                 <div class="form-control p-4">
                     <textarea type="text" id="main-reason" class="textarea textarea-bordered w-full rounded" placeholder="Main reason for visit"></textarea>
                 </div>
@@ -49,19 +49,39 @@
                     <textarea type="text" id="treatments" class="textarea textarea-bordered w-full rounded" placeholder="Current treatments"></textarea>
                 </div>
                 <div class="form-control p-4">
-                    <textarea type="text" id="history" class="textarea textarea-bordered w-full rounded" placeholder="Patient history"></textarea>
+                    <textarea type="text" id="history" class="textarea textarea-bordered w-full rounded h-32" placeholder="Patient history"></textarea>
                 </div>
-                <button type="button" class="btn btn-accent m-4" onclick="handleSubmit()">Submit</button>
-            </form>
+                <div class="form-control p-4">
+                    <div class="collapse collapse-arrow bg-base-300">
+                        <input type="checkbox" />
+                        <div class="collapse-title text-xl font-medium">Prompt input</div>
+                        <div class="collapse-content">
+                            <div class="form-control pb-4">
+                                <div class="label pb-2">
+                                    <span class="label-text font-bold">System prompt</span>
+                                </div>
+                                <div type="text" id="system-prompt" class="textarea textarea-bordered h-fit box-border w-full rounded" contenteditable="true">You are a helpful doctors assistant. You are tasked with thinking of diagnoses for patients given a list of symptoms and history of conditions and tests. The text of your response should use html tags for formatting, as it will be embedded directly into a page. </div>
+                            </div>
+                            <div class="form-control pb-4">
+                                <div class="label pb-2">
+                                    <span class="label-text font-bold">User prompt</span>
+                                </div>
+                                <div type="text" id="user-prompt" class="textarea textarea-bordered h-fit box-border w-full rounded" contenteditable="true">Given this information, please give the top 5 most likely diagnoses for the presenting problem this visit. When listing out the most likely causes, give the rationale for each. Also, list any recommendations for further investigation and analysis.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-active m-4" onclick="handleSubmit()">Submit</button>
+            </div>
         </div>
         <div class="divider divider-horizontal"></div>
         <div class="grid p-8 w-1/2 place-items-center">
-            <div class="card-bordered bg-base-300 w-full shadow-xl border-secondary rounded-lg">
+            <div class="card bg-base-300 w-full rounded-lg">
                 <div class="card-body">
-                    <h2 class="card-title pb-4 text-neutral">OpenAI Response</h2>
+                    <h2 class="card-title pb-8">OpenAI Response</h2>
                     <label class="swap swap-active justify-start select-auto">
                         <div class="swap-on prose">
-                            <p class="italic justify-start text-neutral">Waiting for input...</p>
+                            <p>←<span class="italic"> Waiting for submission</span></p>
                         </div>
                         <div class="swap-off">
                             <span class="loading loading-dots loading-lg"></span>
